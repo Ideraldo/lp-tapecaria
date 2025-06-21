@@ -1172,22 +1172,20 @@ video {
   display: block;
 }
 
-/* Estilos para o modal de imagens (Abordagem robusta) */
+/* Estilos para o modal de imagens */
 #imageModal {
-  display: none; /* Começa totalmente escondido */
+  display: none;
   opacity: 0;
-  backdrop-filter: blur(4px);
   transition: opacity 0.3s ease-in-out;
 }
 
-#imageModal.is-open {
-  display: flex; /* Muda para flex para corresponder às classes do Tailwind */
+#imageModal.is-visible {
   opacity: 1;
 }
 
 #modalImage {
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
   transition: transform 0.3s ease-in-out;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
 }
 
 #modalImage:hover {
@@ -1203,6 +1201,7 @@ video {
   align-items: center;
   justify-content: center;
   transition: all 0.3s ease;
+  cursor: pointer;
 }
 
 #closeModal:hover {
