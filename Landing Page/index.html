@@ -1,17 +1,7 @@
 <html lang="en">
   <head>
-    <script type="module">
-      import RefreshRuntime from "/@react-refresh";
-      RefreshRuntime.injectIntoGlobalHook(window);
-      window.$RefreshReg$ = () => {};
-      window.$RefreshSig$ = () => (type) => type;
-      window.__vite_plugin_react_preamble_installed__ = true;
-    </script>
-
-    <script type="module" src="/@vite/client"></script>
-
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛋️</text></svg>" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Landing Page para Tapeçaria</title>
     <link rel="stylesheet" href="styles.css" />
@@ -941,58 +931,33 @@
                 <h3 class="text-2xl font-bold text-gray-900 mb-6">
                   Solicite seu Orçamento
                 </h3>
-                <form class="space-y-6">
+                <form class="space-y-6" id="contactForm">
                   <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2"
-                      >Nome Completo</label
+                      >Nome</label
                     ><input
                       type="text"
+                      id="userName"
                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                      placeholder="Digite o seu nome para facilitar o atendimento!"
                     />
-                  </div>
-                  <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2"
-                      >Telefone</label
-                    ><input
-                      type="tel"
-                      class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
-                    />
-                  </div>
-                  <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2"
-                      >Email</label
-                    ><input
-                      type="email"
-                      class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
-                    />
-                  </div>
-                  <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2"
-                      >Tipo de Móvel</label
-                    ><select
-                      class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
-                    >
-                      <option>Selecione o tipo de móvel</option>
-                      <option>Sofá</option>
-                      <option>Poltrona</option>
-                      <option>Cadeira</option>
-                      <option>Outros</option>
-                    </select>
                   </div>
                   <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2"
                       >Mensagem</label
                     ><textarea
+                      id="userMessage"
                       rows="4"
                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
                       placeholder="Descreva o que precisa..."
                     ></textarea>
                   </div>
                   <button
-                    type="submit"
-                    class="w-full bg-amber-800 text-white py-4 rounded-lg text-lg font-semibold hover:bg-amber-900 transition-colors"
+                    type="button"
+                    id="whatsappButton"
+                    class="w-full bg-amber-800 text-white py-4 rounded-lg text-lg font-semibold hover:bg-amber-900 transition-colors block text-center no-underline"
                   >
-                    Enviar Solicitação
+                    Enviar Solicitação via WhatsApp
                   </button>
                 </form>
               </div>
@@ -1044,7 +1009,7 @@
               </div>
               <div class="border-t border-stone-800 pt-6">
                 <p class="text-stone-400 text-sm">
-                  © 2024 JELL Tapeçaria. Todos os direitos reservados.
+                  © 2025 JELL Tapeçaria. Todos os direitos reservados.
                 </p>
               </div>
             </div>
@@ -1052,6 +1017,44 @@
         </footer>
       </div>
     </div>
-    <script type="module" src="/src/main.tsx?t=1750034342388"></script>
+    <script>
+      document.getElementById('whatsappButton').addEventListener('click', function() {
+        const name = document.getElementById('userName').value.trim();
+        const message = document.getElementById('userMessage').value.trim();
+        
+        if (!name) {
+          alert('Por favor, digite o seu nome!');
+          document.getElementById('userName').focus();
+          return;
+        }
+        
+        if (!message) {
+          alert('Por favor, descreva o que você precisa!');
+          document.getElementById('userMessage').focus();
+          return;
+        }
+        
+        // Número do WhatsApp da tapeçaria
+        const phoneNumber = '5511981784654';
+        
+        // Mensagem pré-formatada
+        const whatsappMessage = `Olá! Gostaria de solicitar um orçamento para tapeçaria.
+
+*Nome:* ${name}
+*Mensagem:* ${message}
+
+Aguardo o retorno!`;
+        
+        // Codificar a mensagem para URL
+        const encodedMessage = encodeURIComponent(whatsappMessage);
+        
+        // Criar link do WhatsApp
+        const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+        
+        // Abrir WhatsApp
+        window.open(whatsappURL, '_blank');
+      });
+    </script>
   </body>
 </html>
+
