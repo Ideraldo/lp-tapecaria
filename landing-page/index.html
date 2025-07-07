@@ -1265,19 +1265,41 @@ Aguardo o retorno!`;
         startAutoPlay();
       });
 
-      // Mini-carrossel para cada bloco da galeria
+      // Mini-carrossel para cada bloco da galeria - troca em sequência
       document.addEventListener('DOMContentLoaded', function() {
         const carousels = document.querySelectorAll('.mini-carousel');
-        carousels.forEach(carousel => {
-          const slides = carousel.querySelectorAll('.mini-slide');
-          let idx = 0;
-          slides[0].classList.add('active');
-          setInterval(() => {
-            slides[idx].classList.remove('active');
-            idx = (idx + 1) % slides.length;
-            slides[idx].classList.add('active');
-          }, 3500); // Troca a cada 3.5 segundos
+        const slides = [];
+        let currentIndexes = [];
+        
+        // Preparar arrays para controle
+        carousels.forEach((carousel, carouselIndex) => {
+          const carouselSlides = carousel.querySelectorAll('.mini-slide');
+          slides.push(carouselSlides);
+          currentIndexes.push(0);
+          carouselSlides[0].classList.add('active');
         });
+        
+        // Função para trocar uma imagem específica
+        function changeSlide(carouselIndex) {
+          const carouselSlides = slides[carouselIndex];
+          const currentIdx = currentIndexes[carouselIndex];
+          
+          carouselSlides[currentIdx].classList.remove('active');
+          currentIndexes[carouselIndex] = (currentIdx + 1) % carouselSlides.length;
+          carouselSlides[currentIndexes[carouselIndex]].classList.add('active');
+        }
+        
+        // Função para trocar todas as imagens em sequência
+        function changeAllSlides() {
+          carousels.forEach((carousel, index) => {
+            setTimeout(() => {
+              changeSlide(index);
+            }, index * 300); // 0.3s de delay entre cada troca
+          });
+        }
+        
+        // Iniciar o loop
+        setInterval(changeAllSlides, 4000); // Loop completo a cada 4 segundos
       });
     </script>
   </body>
